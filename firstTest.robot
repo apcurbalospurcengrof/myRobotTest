@@ -1,13 +1,29 @@
 *** Settings ***
-Documentation    Suite description
+Library  SeleniumLibrary
+
+*** Variables ***
+${Browser}        chrome
+${SiteUrl}        http://automationpractice.com/index.php?controller=authentication&back=my-account
 
 *** Test Cases ***
-Test title
-    [Tags]    DEBUG
-    Provided precondition
-    When action
-    Then check expectations
+LoginTest
+    Open Browser to the Login Page
+    Enter User Name
+    Enter Password
+    Click Signin
 
 *** Keywords ***
-Provided precondition
-    Setup system under test
+Open Browser to the Login Page
+    open browser    ${SiteUrl}    ${Browser}
+    Maximize Browser Window
+
+Enter User Name
+    Input Text    id=email       bozsozoltan1@gmail.com
+
+Enter Password
+    Input Text    id=passwd  example12
+
+Click Signin
+    click button    id = SubmitLogin
+
+      [Teardown]    Close Browser

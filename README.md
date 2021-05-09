@@ -3,11 +3,16 @@
 ### Install guide
 
 
-> Install Python
+> Install Python from https://www.python.org/downloads/
 > 
-> Install
+> Download Python IDE, like Pycharm
 > 
-> Use command: pip install selenium
+> Use Terminal for execute commands:
 > 
-> Use command: pip install webdrivermanager
+> > pip install robotframework
+> > > Verify installation: robot --version
+> 
+> > Use command: pip install selenium
+> 
+> > Use command: pip install webdrivermanager
 > 

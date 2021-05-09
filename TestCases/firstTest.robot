@@ -1,9 +1,11 @@
 *** Settings ***
 Library  SeleniumLibrary
 Library  String
+Library  Browser
+Resource  ../Resources/LoginKeywords.robot
 
 *** Variables ***
-${Browser}        firefox
+${Browser}        chrome
 ${MyAccountUrl}   http://automationpractice.com/index.php?controller=authentication&back=my-account
 ${BaseUrl}        http://automationpractice.com/index.php
 ${username}       bozsozoltan1@gmail.com
@@ -13,18 +15,18 @@ ${password}       example12
 LoginTest
     Open Browser and successful login
     Search product with keyword
+    Go to homepage and select Popular option
     Add products to cart from Popular tab on Home Page
     Delete products from cart
     Purchase products with bank wire
 
 *** Keywords ***
 Open Browser and successful login
-    open browser    ${MyAccountUrl}    ${Browser}
-    Maximize Browser Window
-    Input Text    id=email      ${username}
-    Input Text    id=passwd     ${password}
-    Click Button  id=SubmitLogin
-    Sleep   2s
+    Open Chrome Browser    ${MyAccountUrl}    ${Browser}
+    Enter UserName      ${username}
+    Enter Password      ${password}
+    Click SignIn
+    Wait Until Page Contains    Welcome to your account.
 
 Search product with keyword
     Input Text    id=search_query_top   Printed
@@ -34,10 +36,12 @@ Search product with keyword
     ${searchResultMessage}    Get Text    xpath=/html/body//h1/*[@class='heading-counter']
     Should Be Equal As Strings    ${searchResultMessage}    5 results have been found.
 
-Add products to cart from Popular tab on Home Page
+Go to homepage and select Popular option
     Click Image     xpath=//*[@class='logo img-responsive']
+    Wait Until Page Contains Element    id:home-page-tabs
     Click Link      xpath=//*[@class='homefeatured']
 
+Add products to cart from Popular tab on Home Page
     Click Image     xpath=//*[@id="homefeatured"]/li[1]/div/div[1]/div/a[1]/img
     Sleep   2s
     ${firstItemId}      Get Text    xpath=//*[@id="product_reference"]/span
@@ -47,6 +51,7 @@ Add products to cart from Popular tab on Home Page
     Sleep   2s
     Page Should Contain Element     //*[@id="layer_cart"]/div[1]
     ${addCartMessage}    Get Text    xpath=//*[@id="layer_cart"]/div[1]/div[2]/h2/span[2]
+    Wait Until Page Contains    Product successfully added
     Should Be Equal As Strings    ${addCartMessage}    There is 1 item in your cart.
     Click Element    xpath=//*[@class='cross']
     Go Back
@@ -61,7 +66,7 @@ Add products to cart from Popular tab on Home Page
     ${secondItemPrice}   Get Text    xpath=//*[@id="our_price_display"]
     Click Button    name=Submit
     ${itemCount}=  Evaluate  ${itemCount} + 1
-    Sleep   2s
+    Sleep   3s
 
     ${addCartMessage}    Get Text    xpath=//*[@id="layer_cart"]/div[1]/div[2]/h2/span[1]
     Should Be Equal As Strings    ${addCartMessage}    There are 2 items in your cart.
@@ -120,9 +125,6 @@ Purchase products with bank wire
     Select Checkbox     id:cgv
     Click Button        name=processCarrier
     Click Link          xpath=//*[@id="HOOK_PAYMENT"]/div[1]/div/p/a
-    #Click Button        xpath=//*[@id="cart_navigation"]/button
-    #${orderId}=         Get Text    xpath=//*[@id="center_column"]/div/[6]
-    #${orderId}=         Get Substring    ${orderId}     47    9
-    #Click Link          xpath=//*[@id="footer"]/div/section[5]/div/ul/li[1]/a
-    #${orderReference}=  Get Text     xpath=//*[@id="order-list"]/tbody/tr[1]/td[1]/a
-    #Should Be Equal As Strings      ${orderReference}   ${orderId}
+    Click Button        xpath=//*[@id="cart_navigation"]/button
+
+    Close Browser

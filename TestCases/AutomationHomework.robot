@@ -5,7 +5,7 @@ Library  Browser
 Resource  ../Resources/LoginKeywords.robot
 
 *** Variables ***
-${Browser}        chrome
+${BROWSER}        chrome
 ${MyAccountUrl}   http://automationpractice.com/index.php?controller=authentication&back=my-account
 ${BaseUrl}        http://automationpractice.com/index.php
 ${username}       bozsozoltan1@gmail.com
@@ -22,7 +22,7 @@ LoginTest
 
 *** Keywords ***
 Open Browser and successful login
-    Open Chrome Browser    ${MyAccountUrl}    ${Browser}
+    Open Chrome Browser    ${MyAccountUrl}    ${BROWSER}
     Enter UserName      ${username}
     Enter Password      ${password}
     Click SignIn
@@ -126,5 +126,6 @@ Purchase products with bank wire
     Click Button        name=processCarrier
     Click Link          xpath=//*[@id="HOOK_PAYMENT"]/div[1]/div/p/a
     Click Button        xpath=//*[@id="cart_navigation"]/button
+    Page Should Contain Your order on My Store is complete.
 
     Close Browser

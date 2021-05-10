@@ -1,18 +1,27 @@
-# myRobotTest
+# Automation homework
+___
 
 ### Install guide
 
 
-> Install Python from https://www.python.org/downloads/
+1. Install Python version 3.9.5 from https://www.python.org/downloads/
+2. Download Python IDE, like Pycharm
 > 
-> Download Python IDE, like Pycharm
+> **Use Terminal for execute commands:**
 > 
-> Use Terminal for execute commands:
+> > - pip install -r > requirements.txt
 > 
-> > pip install robotframework
-> > > Verify installation: robot --version
+> Verify installation
 > 
-> > Use command: pip install selenium
+> > -  robot --version
+>
+> Run test
 > 
-> > Use command: pip install webdrivermanager
+> > - robot TestCases/AutomationHomework.robot
+
+Test runs default on Chrome browser. 
+
+You can choose Firefox when use this command:
 > 
+> > - robot -v Firefox TestCases/AutomationHomework.robot 
+
